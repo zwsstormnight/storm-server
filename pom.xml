@@ -16,6 +16,7 @@
         <module>storm-common</module>
         <module>storm-dev</module>
         <module>storm-eureka</module>
+        <module>storm-cache</module>
     </modules>
 
     <packaging>pom</packaging>
