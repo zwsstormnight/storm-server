@@ -1,6 +1,5 @@
 package cn.nj.storm.others;
 
-import java.util.List;
 import java.util.Map;
 
 /**

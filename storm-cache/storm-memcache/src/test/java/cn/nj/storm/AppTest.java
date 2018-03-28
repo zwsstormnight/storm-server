@@ -1,7 +1,7 @@
 package cn.nj.storm;
 
 /**
- * Unit test for simple App.
+ * Unit test for simple MemcacheServer.
  */
 public class AppTest 
 {
