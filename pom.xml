@@ -18,7 +18,6 @@
         <module>storm-eureka</module>
         <module>storm-cache</module>
         <module>storm-zuul</module>
-        <module>storm-zuul</module>
     </modules>
 
     <packaging>pom</packaging>
