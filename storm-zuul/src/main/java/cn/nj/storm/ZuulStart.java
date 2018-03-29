@@ -2,6 +2,7 @@ package cn.nj.storm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 /**
  * <ZuulStart>
@@ -12,7 +13,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-//@EnableZuulProxy
+@EnableZuulProxy
 @SpringCloudApplication
 public class ZuulStart
 {
