@@ -12,7 +12,8 @@
 
     <name>storm-service</name>
     <modules>
-        <module>common-service</module>
+        <module>storm-service-user</module>
+        <module>storm-service-sso</module>
     </modules>
 
     <dependencies>
