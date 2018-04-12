@@ -2,6 +2,8 @@ package cn.nj.storm.redis.controller;
 
 import cn.nj.storm.redis.pojo.request.RedisReq;
 import cn.nj.storm.redis.pojo.response.RedisResp;
+import cn.nj.storm.redis.service.RedisBasicService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +11,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -25,6 +29,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/redis")
 public class RedisController {
+
+    @Autowired
+    private RedisBasicService redisBasicService;
+
     @RequestMapping("/get")
     @ResponseBody
     public String get(@RequestBody String key) {
@@ -54,23 +62,35 @@ public class RedisController {
     }
 
     @PostMapping("/reactive/set")
-    public Mono<ResponseEntity<String>> setValue(@RequestBody(required = false) RedisReq redisReq) {
-        String result = redisReq.getKey() + ":" + redisReq.getValue();
-        return Mono.just(new ResponseEntity<>(result, HttpStatus.OK));
+    public Mono<ResponseEntity<RedisResp>> setValue(@RequestBody(required = false) RedisReq redisReq) {
+        RedisResp redisResp = new RedisResp(10000, "success", redisReq.getValue(), redisReq.getKey());
+        values.put(redisReq.getKey(), redisReq.getValue());
+        String val = redisBasicService.set(redisReq.getKey(), redisReq.getValue());
+        System.out.println(val);
+        return Mono.just(new ResponseEntity<>(redisResp, HttpStatus.OK));
     }
 
     @PostMapping("/reactive/keys")
     public Flux<RedisResp> keys(@RequestBody(required = false) RedisReq redisReq) {
         String key = redisReq.getKey();
-
-        if (key == null || key == "") {
-            map.entrySet().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
+        List<RedisResp> result = new ArrayList<>();
+        if (key == null || key.equals("")) {
+            result = map.entrySet().stream().map(entry -> {
+                RedisResp temp = new RedisResp();
+                temp.setKey(entry.getKey());
+                temp.setMap(entry.getValue());
+                return temp;
+            }).collect(Collectors.toList());
+            result.addAll(values.entrySet().stream().map(entry -> {
+                RedisResp temp = new RedisResp();
+                temp.setKey(entry.getKey());
+                temp.setData("" + entry.getValue());
+                return temp;
+            }).collect(Collectors.toList()));
         } else {
 
         }
-
-
-        return Flux.just();
+        return Flux.fromIterable(result);
     }
 
 

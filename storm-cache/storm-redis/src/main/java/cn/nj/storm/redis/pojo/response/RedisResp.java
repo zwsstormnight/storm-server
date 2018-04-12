@@ -135,7 +135,7 @@ public class RedisResp implements Serializable {
     /*
      * 返回List数据
      */
-    private List<Object> list;
+    private List<? extends Object> list;
 
     /*
      * 查询返回的Set
@@ -155,7 +155,7 @@ public class RedisResp implements Serializable {
     /*
      * 和缓存相关的参数对象集合
      */
-    private List<RedisReq> redisReqs;
+    private List<? extends RedisReq> redisReqs;
 
     /*
      * 布尔类型
@@ -165,7 +165,7 @@ public class RedisResp implements Serializable {
     /*
      * 返回Map持有化对象
      */
-    private Map<Object, Object> map;
+    private Map<? extends Object, ? extends Object> map;
 
     public Integer getResultCode()
     {
@@ -217,7 +217,7 @@ public class RedisResp implements Serializable {
         this.set = set;
     }
 
-    public List<Object> getList()
+    public List<? extends Object> getList()
     {
         return list;
     }
@@ -267,12 +267,12 @@ public class RedisResp implements Serializable {
         this.bool = bool;
     }
 
-    public Map<Object, Object> getMap()
+    public Map<? extends Object, ? extends Object> getMap()
     {
         return map;
     }
 
-    public void setMap(Map<Object, Object> map)
+    public void setMap(Map<? extends Object, ? extends Object> map)
     {
         this.map = map;
     }
@@ -287,12 +287,12 @@ public class RedisResp implements Serializable {
         this.redisReq = redisReq;
     }
 
-    public List<RedisReq> getRedisReqs()
+    public List<? extends RedisReq> getRedisReqs()
     {
         return redisReqs;
     }
 
-    public void setRedisReqs(List<RedisReq> RedisReqs)
+    public void setRedisReqs(List<? extends RedisReq> RedisReqs)
     {
         this.redisReqs = RedisReqs;
     }
