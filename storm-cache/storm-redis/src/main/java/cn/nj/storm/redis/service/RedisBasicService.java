@@ -11,7 +11,20 @@ package cn.nj.storm.redis.service;
  */
 public interface RedisBasicService {
 
+    /**
+     * <get>
+     * @param key
+     * @return
+     */
     String get(String key);
 
+    /**
+     * <set>
+     * @param key
+     * @param value
+     * @return
+     */
     String set(String key, String value);
+
+
 }
