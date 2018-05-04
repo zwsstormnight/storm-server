@@ -1,6 +1,6 @@
 package cn.nj.storm.redis.server.service.impl;
 
-import cn.nj.storm.redis.server.service.RedisService;
+import cn.nj.storm.redis.service.RedisService;
 import org.springframework.stereotype.Service;
 
 /**
