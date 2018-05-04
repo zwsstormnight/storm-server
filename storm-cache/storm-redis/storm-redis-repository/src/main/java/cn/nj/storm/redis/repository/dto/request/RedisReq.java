@@ -1,4 +1,4 @@
-package cn.nj.storm.redis.pojo.request;
+package cn.nj.storm.redis.repository.dto.request;
 
 import java.io.Serializable;
 import java.util.Collection;

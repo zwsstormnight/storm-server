@@ -1,4 +1,4 @@
-package cn.nj.storm.redis.service;
+package cn.nj.storm.redis.server.service;
 
 /**
  * <一句话功能简述>
@@ -9,9 +9,7 @@ package cn.nj.storm.redis.service;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public interface RedisBasicService {
-
-    String get(String key);
-
-    String set(String key, String value);
+public interface RedisService
+{
+    
 }

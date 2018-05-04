@@ -1,7 +1,8 @@
-package cn.nj.storm.redis.pojo.response;
+package cn.nj.storm.redis.repository.dto.response;
 
-import cn.nj.storm.redis.pojo.ZSetItem;
-import cn.nj.storm.redis.pojo.request.RedisReq;
+
+import cn.nj.storm.redis.repository.dto.ZSetItem;
+import cn.nj.storm.redis.repository.dto.request.RedisReq;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,8 +1,8 @@
-package cn.nj.storm.redis.controller;
+package cn.nj.storm.redis.server.controller;
 
-import cn.nj.storm.redis.pojo.request.RedisReq;
-import cn.nj.storm.redis.pojo.response.RedisResp;
-import cn.nj.storm.redis.service.RedisBasicService;
+import cn.nj.storm.redis.repository.assemble.RedisBasicService;
+import cn.nj.storm.redis.repository.dto.request.RedisReq;
+import cn.nj.storm.redis.repository.dto.response.RedisResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,29 +28,37 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/redis")
-public class RedisController {
-
+public class RedisController
+{
+    
     @Autowired
     private RedisBasicService redisBasicService;
-
+    
     @RequestMapping("/get")
     @ResponseBody
-    public String get(@RequestBody String key) {
-        return "redis 查询" + key;
+    public String get(@RequestBody String key)
+    {
+        RedisResp redisResp = redisBasicService.get(key);
+        System.out.println(redisResp.getData());
+        return redisResp.getData();
     }
-
+    
     @RequestMapping("/set")
     @ResponseBody
-    public String set(@RequestParam("key") String key, @RequestParam("value") String value) {
+    public String set(@RequestParam("key") String key, @RequestParam("value") String value)
+    {
+        RedisResp redisResp = redisBasicService.set(key,value);
         return "redis SET:" + key + ",value:" + value;
     }
-
+    
     private static Map<String, Object> values = new HashMap<>();
-
+    
     private static Map<String, Map<String, Object>> map = new HashMap<>();
-
+    
     @PostConstruct
-    public void init() throws Exception {
+    public void init()
+        throws Exception
+    {
         values.put("A", 1);
         values.put("b", 2);
         Map local = new HashMap<>();
@@ -60,21 +68,23 @@ public class RedisController {
         local.put("15", "asd3");
         map.put("c", local);
     }
-
+    
     @PostMapping("/reactive/set")
-    public Mono<ResponseEntity<RedisResp>> setValue(@RequestBody(required = false) RedisReq redisReq) {
-        RedisResp redisResp = new RedisResp(10000, "success", redisReq.getValue(), redisReq.getKey());
+    public Mono<ResponseEntity<RedisResp>> setValue(@RequestBody(required = false) RedisReq redisReq)
+    {
         values.put(redisReq.getKey(), redisReq.getValue());
-        String val = redisBasicService.set(redisReq.getKey(), redisReq.getValue());
-        System.out.println(val);
+        RedisResp redisResp = redisBasicService.set(redisReq.getKey(), redisReq.getValue());
+        System.out.println(redisResp.getData());
         return Mono.just(new ResponseEntity<>(redisResp, HttpStatus.OK));
     }
-
+    
     @PostMapping("/reactive/keys")
-    public Flux<RedisResp> keys(@RequestBody(required = false) RedisReq redisReq) {
+    public Flux<RedisResp> keys(@RequestBody(required = false) RedisReq redisReq)
+    {
         String key = redisReq.getKey();
         List<RedisResp> result = new ArrayList<>();
-        if (key == null || key.equals("")) {
+        if (key == null || key.equals(""))
+        {
             result = map.entrySet().stream().map(entry -> {
                 RedisResp temp = new RedisResp();
                 temp.setKey(entry.getKey());
@@ -87,11 +97,12 @@ public class RedisController {
                 temp.setData("" + entry.getValue());
                 return temp;
             }).collect(Collectors.toList()));
-        } else {
-
+        }
+        else
+        {
+            
         }
         return Flux.fromIterable(result);
     }
-
-
+    
 }

@@ -1,4 +1,4 @@
-package cn.nj.storm.redis.pojo;
+package cn.nj.storm.redis.repository.dto;
 
 import java.io.Serializable;
 
@@ -13,9 +13,6 @@ import java.io.Serializable;
  */
 public class ZSetItem implements Serializable
 {
-    /**
-     * 注释内容
-     */
     private static final long serialVersionUID = 1L;
 
     String member;
@@ -31,7 +28,8 @@ public class ZSetItem implements Serializable
     }
 
     /**
-     * @param 对member进行赋值 */
+     * @param member
+     */
     public void setMember(String member)
     {
         this.member = member;
@@ -46,7 +44,8 @@ public class ZSetItem implements Serializable
     }
 
     /**
-     * @param 对score进行赋值 */
+     * @param score
+     */
     public void setScore(Double score)
     {
         this.score = score;
