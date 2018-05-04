@@ -8,32 +8,40 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>storm-redis</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>storm-redis</name>
+    <modules>
+        <module>storm-redis-repository</module>
+        <module>storm-redis-service</module>
+    </modules>
 
     <dependencies>
-        <!-- redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <!-- mvc
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        -->
-        <!-- webflux -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>io.projectreactor</groupId>
-            <artifactId>reactor-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
+    <profiles>
+        <!-- 默认本地配置 -->
+        <profile>
+            <id>standalone</id>
+            <properties>
+                <profileActive>standalone</profileActive>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>sentinel</id>
+            <properties>
+                <profileActive>sentinel</profileActive>
+            </properties>
+        </profile>
+        <profile>
+            <id>cluster</id>
+            <properties>
+                <profileActive>cluster</profileActive>
+            </properties>
+        </profile>
+    </profiles>
 </project>

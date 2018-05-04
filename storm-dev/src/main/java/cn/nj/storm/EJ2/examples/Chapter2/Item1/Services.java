@@ -1,6 +1,6 @@
 package cn.nj.storm.EJ2.examples.Chapter2.Item1;// Service provider framework sketch
 
-// Noninstantiable class for service registration and access - Pages 8-9
+// Noninstantiable class for server registration and access - Pages 8-9
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -11,7 +11,7 @@ public class Services
     {
     } // Prevents instantiation (Item 4)
     
-    // Maps service names to services
+    // Maps server names to services
     private static final Map<String, Provider> providers = new ConcurrentHashMap<String, Provider>();
     
     public static final String DEFAULT_PROVIDER_NAME = "<def>";

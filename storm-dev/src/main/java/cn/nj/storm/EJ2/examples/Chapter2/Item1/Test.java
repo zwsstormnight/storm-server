@@ -1,4 +1,4 @@
-package cn.nj.storm.EJ2.examples.Chapter2.Item1;// Simple test program for service provider framework
+package cn.nj.storm.EJ2.examples.Chapter2.Item1;// Simple test program for server provider framework
 
 public class Test
 {
@@ -25,7 +25,7 @@ public class Test
                 @Override
                 public String toString()
                 {
-                    return "Default service";
+                    return "Default server";
                 }
             };
         }
@@ -40,7 +40,7 @@ public class Test
                 @Override
                 public String toString()
                 {
-                    return "Complementary service";
+                    return "Complementary server";
                 }
             };
         }
@@ -55,7 +55,7 @@ public class Test
                 @Override
                 public String toString()
                 {
-                    return "Armed service";
+                    return "Armed server";
                 }
             };
         }
