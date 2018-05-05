@@ -1,6 +1,6 @@
 package cn.nj.storm.redis.server.controller;
 
-import cn.nj.storm.redis.repository.assemble.RedisBasicService;
+import cn.nj.storm.redis.repository.assemble.impl.RedisBasicServiceImpl;
 import cn.nj.storm.redis.repository.dto.request.RedisReq;
 import cn.nj.storm.redis.repository.dto.response.RedisResp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +32,23 @@ public class RedisController
 {
     
     @Autowired
-    private RedisBasicService redisBasicService;
+    private RedisBasicServiceImpl redisBasicService;
     
     @RequestMapping("/get")
     @ResponseBody
-    public String get(@RequestBody String key)
+    public String get(@RequestBody RedisReq redisReq)
     {
-        RedisResp redisResp = redisBasicService.get(key);
+        RedisResp redisResp = redisBasicService.get(redisReq.getKey());
         System.out.println(redisResp.getData());
         return redisResp.getData();
     }
     
     @RequestMapping("/set")
     @ResponseBody
-    public String set(@RequestParam("key") String key, @RequestParam("value") String value)
+    public String set(@RequestBody(required = false) RedisReq redisReq)
     {
-        RedisResp redisResp = redisBasicService.set(key,value);
-        return "redis SET:" + key + ",value:" + value;
+        RedisResp redisResp = redisBasicService.set(redisReq.getKey(), redisReq.getValue());
+        return "redis SET:" + redisResp.getKey() + ",value:" + redisResp.getData();
     }
     
     private static Map<String, Object> values = new HashMap<>();

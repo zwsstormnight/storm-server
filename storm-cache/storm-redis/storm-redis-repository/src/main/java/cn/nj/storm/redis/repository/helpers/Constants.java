@@ -1,4 +1,4 @@
-package cn.nj.storm.redis.repository.constants;
+package cn.nj.storm.redis.repository.helpers;
 
 /**
  * <一句话功能简述>

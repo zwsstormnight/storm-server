@@ -223,7 +223,7 @@ public class RedisResp implements Serializable {
         return list;
     }
 
-    public void setList(List<Object> list)
+    public void setList(List<? extends Object> list)
     {
         this.list = list;
     }
