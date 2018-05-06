@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="redisOperationInterceptor"
+          class="cn.nj.storm.redis.repository.helpers.interceptors.RedisOperationInterceptor"></bean>
+    <aop:config>
+        <!--切入点-->
+        <aop:pointcut id="redisOperate"
+                      expression="@annotation(cn.nj.storm.redis.repository.helpers.annotations.EnableRedisTransactional) and @annotation(cn.nj.storm.redis.repository.helpers.annotations.EnableRedisPipelined)"/>
+        <!--在该切入点使用自定义拦截器-->
+        <aop:advisor pointcut-ref="redisOperate" advice-ref="redisOperationInterceptor"/>
+    </aop:config>
+</beans>
