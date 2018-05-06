@@ -5,6 +5,7 @@ import cn.nj.storm.redis.repository.helpers.Constants;
 import cn.nj.storm.redis.repository.dto.ZSetItem;
 import cn.nj.storm.redis.repository.dto.response.RedisResp;
 import cn.nj.storm.redis.repository.helpers.StringHelper;
+import cn.nj.storm.redis.repository.helpers.annotations.EnableRedisPipelined;
 import cn.nj.storm.redis.repository.helpers.bean.LocalSortQuery;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +42,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
     private StringRedisTemplate stringRedisTemplate;
     
     @Override
+    @EnableRedisPipelined
     public RedisResp get(String key)
     {
         String strValue = (String)stringRedisTemplate.opsForValue().get(key);
@@ -1182,25 +1184,5 @@ public class RedisBasicServiceImpl implements RedisBasicService
         resultBean.setNumObj(resultValue);
         resultBean.setKey(key);
         return resultBean;
-    }
-
-    public static void main(String args[])
-    {
-        try
-        {
-            //断言1结果为true，则继续往下执行
-            assert true;
-            System.out.println("断言1没有问题，Go！");
-            
-            System.out.println("\n-----------------\n");
-            
-            //断言2结果为false,程序终止
-            assert false : "断言失败，此表达式的信息将会在抛出异常的时候输出！";
-            System.out.println("断言2没有问题，Go！");
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 }

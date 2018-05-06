@@ -3,6 +3,7 @@ package cn.nj.storm.redis.server.controller;
 import cn.nj.storm.redis.repository.assemble.impl.RedisBasicServiceImpl;
 import cn.nj.storm.redis.repository.dto.request.RedisReq;
 import cn.nj.storm.redis.repository.dto.response.RedisResp;
+import cn.nj.storm.redis.repository.helpers.annotations.EnableRedisPipelined;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,7 @@ public class RedisController
     
     @RequestMapping("/get")
     @ResponseBody
+    @EnableRedisPipelined
     public String get(@RequestBody RedisReq redisReq)
     {
         RedisResp redisResp = redisBasicService.get(redisReq.getKey());
