@@ -16,5 +16,9 @@ import java.lang.annotation.*;
 @Documented
 public @interface EnableRedisPipelined
 {
-
+    /**
+     * 需要流式执行的方法组
+     * @return
+     */
+    String[] methods();
 }

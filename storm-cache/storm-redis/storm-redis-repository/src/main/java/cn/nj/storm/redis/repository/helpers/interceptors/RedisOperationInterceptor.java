@@ -30,6 +30,9 @@ public class RedisOperationInterceptor implements MethodInterceptor
         if (methodInvocation.getMethod().isAnnotationPresent(EnableRedisPipelined.class))
         {
             System.out.println("----------this method is added @EnableRedisPipelined-------------------------");
+            EnableRedisPipelined pipelined = methodInvocation.getMethod().getAnnotation(EnableRedisPipelined.class);
+            String[] methods = pipelined.methods();
+            System.out.println(methods);
         }
         // 判断该方法是否加了@EnableRedisTransactional 注解
         if (methodInvocation.getMethod().isAnnotationPresent(EnableRedisTransactional.class))

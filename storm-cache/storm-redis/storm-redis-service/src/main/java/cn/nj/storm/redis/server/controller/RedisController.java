@@ -1,6 +1,7 @@
 package cn.nj.storm.redis.server.controller;
 
-import cn.nj.storm.redis.repository.assemble.impl.RedisBasicServiceImpl;
+import cn.nj.storm.common.utils.LoggerInitializer;
+import cn.nj.storm.redis.repository.assemble.RedisBasicService;
 import cn.nj.storm.redis.repository.dto.request.RedisReq;
 import cn.nj.storm.redis.repository.dto.response.RedisResp;
 import cn.nj.storm.redis.repository.helpers.annotations.EnableRedisPipelined;
@@ -29,15 +30,14 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/redis")
-public class RedisController
+public class RedisController implements LoggerInitializer
 {
     
     @Autowired
-    private RedisBasicServiceImpl redisBasicService;
+    private RedisBasicService redisBasicService;
     
     @RequestMapping("/get")
     @ResponseBody
-    @EnableRedisPipelined
     public String get(@RequestBody RedisReq redisReq)
     {
         RedisResp redisResp = redisBasicService.get(redisReq.getKey());

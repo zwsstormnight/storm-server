@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public interface LoggerInitializer<T>
+public interface LoggerInitializer
 {
     Logger INTERFACE_LOGGER = LoggerFactory.getLogger("interface");
 
@@ -20,6 +20,4 @@ public interface LoggerInitializer<T>
 
     Logger DEBUG_LOGGER = LoggerFactory.getLogger("interface");
 
-    //这个怎么搞？
-//    Logger CLASS_LOGGER = LoggerFactory.getLogger(t);
 }

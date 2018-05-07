@@ -42,7 +42,6 @@ public class RedisBasicServiceImpl implements RedisBasicService
     private StringRedisTemplate stringRedisTemplate;
     
     @Override
-    @EnableRedisPipelined
     public RedisResp get(String key)
     {
         String strValue = (String)stringRedisTemplate.opsForValue().get(key);
@@ -53,6 +52,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
     }
 
     @Override
+    @EnableRedisPipelined
     public RedisResp set(String key, String value)
     {
         stringRedisTemplate.opsForValue().set(key, value);

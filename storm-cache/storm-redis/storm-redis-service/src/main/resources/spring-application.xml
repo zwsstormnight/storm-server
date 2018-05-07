@@ -8,7 +8,7 @@
     <aop:config>
         <!--切入点-->
         <aop:pointcut id="redisOperate"
-                      expression="@annotation(cn.nj.storm.redis.repository.helpers.annotations.EnableRedisTransactional) and @annotation(cn.nj.storm.redis.repository.helpers.annotations.EnableRedisPipelined)"/>
+                      expression="@annotation(cn.nj.storm.redis.repository.helpers.annotations.EnableRedisTransactional) or @annotation(cn.nj.storm.redis.repository.helpers.annotations.EnableRedisPipelined)"/>
         <!--在该切入点使用自定义拦截器-->
         <aop:advisor pointcut-ref="redisOperate" advice-ref="redisOperationInterceptor"/>
     </aop:config>
