@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: zuul-service
+
+server:
+  port: 18081
+
+zuul:
+  prefix: /api #为zuul设置一个公共的前缀
+  routes:
+    redis:
+      path: /redis/**
+      serviceId: storm-cache-redis
+    memcache:
+      path: /memcache/**
+      serviceId: storm-cache-memcache
+    user:
+      path: /user/**
+      serviceId: storm-service-user
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:18781/eureka/
