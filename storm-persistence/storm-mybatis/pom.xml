@@ -1,30 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>storm-service</artifactId>
+        <artifactId>storm-persistence</artifactId>
         <groupId>cn.nj.storm</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>storm-service-sso</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>storm-mybatis</artifactId>
 
-    <name>storm-service-sso</name>
-    <url>http://maven.apache.org</url>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <name>storm-mybatis</name>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-
+        <!-- spring boot & mybatis-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -42,12 +32,11 @@
             <artifactId>pagehelper</artifactId>
             <version>5.1.3</version>
         </dependency>
-        <!-- alibaba的druid数据库连接池
+        <!-- alibaba的druid数据库连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.0</version>
         </dependency>
-        -->
     </dependencies>
 </project>

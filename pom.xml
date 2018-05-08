@@ -20,6 +20,7 @@
         <module>storm-zuul</module>
         <module>storm-task</module>
         <module>storm-service</module>
+        <module>storm-persistence</module>
     </modules>
 
     <packaging>pom</packaging>
