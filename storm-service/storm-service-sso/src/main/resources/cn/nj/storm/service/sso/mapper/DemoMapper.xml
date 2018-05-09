@@ -4,7 +4,7 @@
     <resultMap id="BaseResultMap" type="cn.nj.storm.service.sso.bean.DemoBean">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="name" jdbcType="VARCHAR" property="name" />
-        <result column="create_time" jdbcType="DATETIME" property="createTime" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     </resultMap>
     <select id="selectDemoAll" resultMap="BaseResultMap">
         select id,name,create_time from demo

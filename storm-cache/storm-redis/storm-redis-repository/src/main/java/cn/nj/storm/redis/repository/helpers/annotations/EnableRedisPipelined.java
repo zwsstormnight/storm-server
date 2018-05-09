@@ -16,9 +16,10 @@ import java.lang.annotation.*;
 @Documented
 public @interface EnableRedisPipelined
 {
+    String value() default "";
     /**
      * 需要流式执行的方法组
      * @return
      */
-    String[] methods();
+    String[] methods() default "";
 }

@@ -18,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @since [产品/模块版本]
  */
 @SpringBootApplication
+@MapperScan("cn.nj.storm.**.mapper")
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableFeignClients

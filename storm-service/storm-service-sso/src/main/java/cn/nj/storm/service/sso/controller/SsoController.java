@@ -2,8 +2,10 @@ package cn.nj.storm.service.sso.controller;
 
 import cn.nj.storm.service.sso.hystrics.HystrixClientRemoteInterface;
 import cn.nj.storm.service.sso.service.RemoteInterface;
+import cn.nj.storm.service.sso.service.SsoService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +25,9 @@ public class SsoController
 {
     @Autowired
     private RemoteInterface remoteInterface;
+
+    @Autowired
+    private SsoService ssoService;
     
     @Autowired
     private HystrixClientRemoteInterface hystrixClientRemoteInterface;
@@ -51,7 +56,7 @@ public class SsoController
     {
         String result = remoteInterface.getNameByProvider(name);
         System.out.println(result);
-        return remoteInterface.getName(name);
+        return result;
     }
     
     /**
@@ -75,5 +80,13 @@ public class SsoController
     public String getPostFallback()
     {
         return "this is fallBack, post has failed ";
+    }
+
+
+    @RequestMapping(value = "/list")
+    @ResponseBody
+    public String list()
+    {
+        return ssoService.list();
     }
 }

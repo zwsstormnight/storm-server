@@ -1,5 +1,6 @@
 package cn.nj.storm;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -15,6 +16,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @since [产品/模块版本]
  */
 @SpringBootApplication
+@MapperScan("cn.nj.storm.**.mapper")
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 @EnableFeignClients

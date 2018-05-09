@@ -16,4 +16,5 @@ import java.lang.annotation.*;
 @Documented
 public @interface EnableRedisTransactional
 {
+    String value() default "";
 }
