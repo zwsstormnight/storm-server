@@ -1,9 +1,14 @@
 package cn.nj.storm.service.user.controller;
 
 import cn.nj.storm.common.utils.LoggerInitializer;
+import cn.nj.storm.service.user.bean.DemoBean;
+import cn.nj.storm.service.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <一句话功能简述>
@@ -18,8 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController implements LoggerInitializer
 {
-//    @RequestMapping(value = "/teamInfo")
-//    @ResponseBody
-//    public List<Demo>
-
+    
+    @Autowired
+    private UserService userService;
+    
+    @RequestMapping(value = "/demo")
+    @ResponseBody
+    public List<DemoBean> demoList()
+    {
+        return userService.list();
+    }
+    
 }

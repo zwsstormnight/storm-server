@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
+
 /**
  * <UserServer>
  * <用户模块服务启动类>
@@ -16,6 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @since [产品/模块版本]
  */
 @SpringBootApplication
+@ComponentScan(basePackages = "cn.nj.storm")
 @MapperScan("cn.nj.storm.**.mapper")
 @EnableDiscoveryClient
 @EnableCircuitBreaker

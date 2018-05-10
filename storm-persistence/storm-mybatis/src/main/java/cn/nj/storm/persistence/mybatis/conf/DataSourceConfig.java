@@ -7,6 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -26,11 +27,15 @@ import javax.sql.DataSource;
  * @since [产品/模块版本]
  */
 @Configuration
+@MapperScan("cn.nj.storm.**.mapper")
 @EnableTransactionManagement
-public class DataSourceConfig implements TransactionManagementConfigurer
+public class DataSourceConfig
 {
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private Environment env;
     
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource)
@@ -41,25 +46,22 @@ public class DataSourceConfig implements TransactionManagementConfigurer
         fb.setDataSource(dataSource);
         //配置分页插件
 //        fb.setPlugins(new Interceptor[] {pageInterceptor});
-//        fb.setTypeAliasesPackage(env.getProperty("mybatis.type-aliases-package"));
-//        fb.setMapperLocations(
-//            new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapper-locations")));
-        // 添加XML目录
-//        ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-
+        fb.setTypeAliasesPackage(env.getProperty("mybatis.type-aliases-package"));
+        fb.setMapperLocations(
+            new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapper-locations")));
         return fb.getObject();
     }
+
+//    @Bean
+//    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory)
+//    {
+//        return new SqlSessionTemplate(sqlSessionFactory);
+//    }
     
-    @Bean
-    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory)
-    {
-        return new SqlSessionTemplate(sqlSessionFactory);
-    }
-    
-    @Bean
-    @Override
-    public PlatformTransactionManager annotationDrivenTransactionManager()
-    {
-        return new DataSourceTransactionManager(dataSource);
-    }
+//    @Bean
+//    @Override
+//    public PlatformTransactionManager annotationDrivenTransactionManager()
+//    {
+//        return new DataSourceTransactionManager(dataSource);
+//    }
 }
