@@ -1,10 +1,13 @@
 package cn.nj.storm.persistence.mybatis.conf;
 
+import com.github.pagehelper.PageInterceptor;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * <数据源配置>
@@ -36,6 +40,9 @@ public class DataSourceConfig
 
     @Autowired
     private Environment env;
+
+    @Value("${pagehelper.helperDialect}")
+    private String helperDialect;
     
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource)
@@ -45,7 +52,11 @@ public class DataSourceConfig
         //设置数据源
         fb.setDataSource(dataSource);
         //配置分页插件
-//        fb.setPlugins(new Interceptor[] {pageInterceptor});
+        PageInterceptor pageInterceptor = new PageInterceptor();
+        Properties properties = new Properties();
+        properties.setProperty("helperDialect", helperDialect);
+        pageInterceptor.setProperties(properties);
+        fb.setPlugins(new Interceptor[] {pageInterceptor});
         fb.setTypeAliasesPackage(env.getProperty("mybatis.type-aliases-package"));
         fb.setMapperLocations(
             new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapper-locations")));

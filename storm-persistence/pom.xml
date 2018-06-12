@@ -16,6 +16,7 @@
     <modules>
         <module>storm-mybatis</module>
         <module>storm-jpa</module>
+        <module>storm-sharding-mybatis</module>
     </modules>
 
     <properties>

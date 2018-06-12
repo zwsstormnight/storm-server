@@ -18,6 +18,6 @@ public interface LoggerInitializer
 
     Logger RUN_LOGGER = LoggerFactory.getLogger("run");
 
-    Logger DEBUG_LOGGER = LoggerFactory.getLogger("interface");
+    Logger DEBUG_LOGGER = LoggerFactory.getLogger("debug");
 
 }
