@@ -2,8 +2,10 @@ package cn.nj.storm.service.user.controller;
 
 import cn.nj.storm.common.utils.LoggerInitializer;
 import cn.nj.storm.service.user.bean.DemoBean;
+import cn.nj.storm.service.user.bean.User;
 import cn.nj.storm.service.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +30,15 @@ public class UserController implements LoggerInitializer
     private UserService userService;
     
     @RequestMapping(value = "/demo")
-    @ResponseBody
     public List<DemoBean> demoList()
     {
         return userService.list();
+    }
+
+    @PostMapping(value = "/register")
+    public String register(User user){
+        System.out.println("start register");
+        return "register user";
     }
     
 }

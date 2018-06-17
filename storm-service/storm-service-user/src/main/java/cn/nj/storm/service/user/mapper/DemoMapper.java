@@ -1,6 +1,7 @@
 package cn.nj.storm.service.user.mapper;
 
 import cn.nj.storm.service.user.bean.DemoBean;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -13,7 +14,12 @@ import java.util.List;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
+@Repository
 public interface DemoMapper
 {
+    /**
+     * demo全量查询
+     * @return
+     */
     List<DemoBean> selectDemoAll();
 }
