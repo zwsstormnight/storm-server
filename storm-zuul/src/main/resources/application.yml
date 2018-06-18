@@ -1,6 +1,6 @@
 spring:
   application:
-    name: zuul-service
+    name: storm-zuul
 
 server:
   port: 18081
@@ -17,6 +17,7 @@ zuul:
     user:
       path: /user/**
       serviceId: storm-service-user
+      stripPrefix: false
 
 eureka:
   client:

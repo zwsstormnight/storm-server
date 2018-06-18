@@ -29,11 +29,11 @@ public class TokenAuthorInterceptor implements HandlerInterceptor, LoggerInitial
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
         System.out.println("---------------拦截器正在处理- postHandle ---------------");
         //当controller的返回类型为ModelAndView的时候，可以在postHandle方法中获得返回去的值
-        System.out.println(modelAndView);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
         System.out.println("---------------拦截器正在处理- afterCompletion ---------------");
+        System.out.println(e);
     }
 }
