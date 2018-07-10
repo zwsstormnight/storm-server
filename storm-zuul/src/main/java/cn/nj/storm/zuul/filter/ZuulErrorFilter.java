@@ -11,7 +11,7 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.ERROR_TYPE;
 
 /**
- * <一句话功能简述>
+ * <zuul网关通用异常过滤器>
  * <功能详细描述>
  *
  * @author zhengweishun

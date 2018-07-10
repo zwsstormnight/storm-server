@@ -21,6 +21,8 @@ public class ZuulConfig
     
     @Value("${zuul.prefix}")
     private String zuulPrefix;
+
+    //TODO 主动AES解密
     
     @Bean
     public ZuulTokenFilter zuulTokenFilter()

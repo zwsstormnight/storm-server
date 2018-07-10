@@ -7,6 +7,7 @@ import com.netflix.zuul.exception.ZuulException;
 import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_DECORATION_FILTER_ORDER;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
@@ -74,6 +75,12 @@ public class ZuulTokenFilter extends ZuulFilter implements LoggerInitializer
             ctx.setResponseStatusCode(400);
             ctx.setResponseBody("token is empty");
             ctx.set("isSuccess", false);
+        }
+        try {
+//            doSomething();
+        } catch (Exception e) {
+            ctx.set("error.status_code", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ctx.set("error.exception", e);
         }
         return null;
     }
