@@ -21,6 +21,8 @@
         <module>storm-task</module>
         <module>storm-service</module>
         <module>storm-persistence</module>
+        <module>storm-searching</module>
+        <module>storm-gateway</module>
     </modules>
 
     <packaging>pom</packaging>
