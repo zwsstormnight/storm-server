@@ -5,11 +5,9 @@ import cn.nj.storm.service.user.bean.DemoBean;
 import cn.nj.storm.service.user.bean.User;
 import cn.nj.storm.service.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,15 +28,20 @@ public class UserController implements LoggerInitializer
     private UserService userService;
     
     @RequestMapping(value = "/demo")
-    public List<DemoBean> demoList()
-    {
-        return userService.list();
+    public List<DemoBean> demoList() throws Exception {
+        throw new Exception("随便抛个异常");
+//        return userService.list();
     }
 
     @PostMapping(value = "/register")
     public String register(User user){
         System.out.println("start register");
         return "register user";
+    }
+
+    @GetMapping(value = "/register/user")
+    public String register(HttpServletRequest request){
+        return "user";
     }
     
 }
