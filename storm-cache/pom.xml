@@ -6,11 +6,10 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>storm-cache</artifactId>
     <packaging>pom</packaging>
-
     <name>storm-cache</name>
+    <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>storm-memcache</module>
         <module>storm-redis</module>
@@ -23,14 +22,6 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
         <!-- junit -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

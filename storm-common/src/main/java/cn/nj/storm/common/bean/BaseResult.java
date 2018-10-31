@@ -1,4 +1,4 @@
-package cn.nj.storm.common.pojo;
+package cn.nj.storm.common.bean;
 
 import com.alibaba.fastjson.annotation.JSONField;
 

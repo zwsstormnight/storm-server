@@ -11,6 +11,7 @@
     <artifactId>storm-redis-service</artifactId>
     <name>storm-redis-service</name>
     <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -24,13 +25,12 @@
             <artifactId>storm-redis-repository</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
-        <!-- mvc
+        <!-- eureka client -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-        -->
+
         <!-- webflux -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -47,11 +47,51 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <fork>true</fork>
+                    <classesDirectory>target/classes/</classesDirectory>
+                    <excludes>
+                        <exclude>
+                            application-${profileActive}.properties
+                        </exclude>
+                        <exclude>
+                            application.properties
+                        </exclude>
+                    </excludes>
+                    <archive>
+                        <manifest>
+                            <mainClass>cn.nj.storm.RedisServer</mainClass>
+                            <!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>.</Class-Path>
+                        </manifestEntries>
+                    </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <type>jar</type>
+                            <includeTypes>jar</includeTypes>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
@@ -68,13 +108,29 @@
                 <version>2.6</version>
             </plugin>
         </plugins>
-        <finalName>cloudschool</finalName>
+        <finalName>storm-redis-service</finalName>
         <resources>
             <resource>
-                <!--对配置文件下的目录做特殊处理 -->
                 <filtering>true</filtering>
                 <directory>src/main/resources</directory>
-                <!--不打包的配置文件 -->
+                <includes>
+                    <include>application.properties</include>
+                    <include>logback.xml</include>
+                    <include>spring-application.xml</include>
+                </includes>
+                <excludes>
+                    <exclude>profiles/**</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}</targetPath>
+                <includes>
+                    <include>application.properties</include>
+                    <include>logback.xml</include>
+                    <include>spring-application.xml</include>
+                </includes>
                 <excludes>
                     <exclude>profiles/**</exclude>
                 </excludes>
@@ -82,6 +138,14 @@
             <resource>
                 <filtering>true</filtering>
                 <directory>src/main/resources/profiles/${profileActive}</directory>
+                <includes>
+                    <include>application-${profileActive}.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources/profiles/${profileActive}</directory>
+                <targetPath>${project.build.directory}</targetPath>
                 <includes>
                     <include>application-${profileActive}.properties</include>
                 </includes>

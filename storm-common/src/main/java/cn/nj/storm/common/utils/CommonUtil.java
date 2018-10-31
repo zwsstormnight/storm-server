@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.nj.storm.common.pojo.BaseResult;
+import cn.nj.storm.common.bean.BaseResult;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 

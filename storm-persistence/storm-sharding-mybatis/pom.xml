@@ -10,7 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>storm-sharding-mybatis</artifactId>
     <name>storm-sharding-mybatis</name>
-
+    <packaging>jar</packaging>
+    <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>io.shardingjdbc</groupId>

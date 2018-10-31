@@ -23,6 +23,7 @@
         <module>storm-persistence</module>
         <module>storm-searching</module>
         <module>storm-gateway</module>
+        <module>storm-token</module>
     </modules>
 
     <packaging>pom</packaging>

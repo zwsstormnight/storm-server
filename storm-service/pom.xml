@@ -9,7 +9,7 @@
 
     <artifactId>storm-service</artifactId>
     <packaging>pom</packaging>
-
+    <version>1.0.0-SNAPSHOT</version>
     <name>storm-service</name>
     <modules>
         <module>storm-service-user</module>

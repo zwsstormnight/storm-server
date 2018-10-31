@@ -1,6 +1,5 @@
 package cn.nj.storm.service.token.controller;
 
-import cn.nj.storm.common.pojo.TokenRecord;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,13 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/token")
-public class TokenController {
-
-    public TokenRecord init(){
+public class TokenController
+{
+    
+    public String formToken()
+    {
         return null;
     }
-
-    public TokenRecord check(){
+    
+    public String loginToken()
+    {
         return null;
     }
 }

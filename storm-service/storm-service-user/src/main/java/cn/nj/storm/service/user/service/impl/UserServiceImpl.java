@@ -6,6 +6,8 @@ import cn.nj.storm.service.user.mapper.DemoMapper;
 import cn.nj.storm.service.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class UserServiceImpl implements UserService, LoggerInitializer
     private DemoMapper demoMapper;
     
     @Override
+    @Transactional(propagation=Propagation.NESTED)
     public List<DemoBean> list()
     {
         return demoMapper.selectDemoAll();

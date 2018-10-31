@@ -1,6 +1,6 @@
 package cn.nj.storm.common.constants;
 
-import cn.nj.storm.common.pojo.BaseResult;
+import cn.nj.storm.common.bean.BaseResult;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 

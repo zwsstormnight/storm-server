@@ -4,14 +4,17 @@ import cn.nj.storm.common.utils.LoggerInitializer;
 import cn.nj.storm.service.user.bean.DemoBean;
 import cn.nj.storm.service.user.bean.User;
 import cn.nj.storm.service.user.service.UserService;
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * <一句话功能简述>
+ * <用户>
  * <功能详细描述>
  *
  * @author zhengweishun
@@ -28,7 +31,7 @@ public class UserController implements LoggerInitializer
     private UserService userService;
     
     @RequestMapping(value = "/demo")
-    public List<DemoBean> demoList() throws Exception {
+    public List<DemoBean> demo() throws Exception {
         throw new Exception("随便抛个异常");
 //        return userService.list();
     }
@@ -39,9 +42,30 @@ public class UserController implements LoggerInitializer
         return "register user";
     }
 
-    @GetMapping(value = "/register/user")
-    public String register(HttpServletRequest request){
-        return "user";
+    @GetMapping(value = "/first")
+    public Map<String, Object> firstResp (HttpServletRequest request){
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("request Url", request.getRequestURL());
+        request.getSession().setAttribute("map", map);
+        return map;
+    }
+
+    @GetMapping(value = "/user")
+    public String userinfo(HttpServletRequest request){
+        Map<String, Object> map = new HashMap<>(2);
+        map.put("sessionId", request.getSession().getId());
+        map.put("message", request.getSession().getAttribute("map"));
+        return JSON.toJSONString(map);
+    }
+
+    @PostMapping(value = "/login")
+    public String login(User user){
+        return null;
+    }
+
+    @PostMapping(value = "/logout")
+    public String logout(User user){
+        return null;
     }
     
 }

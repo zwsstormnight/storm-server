@@ -3,10 +3,23 @@ package cn.nj.storm.redis.repository.assemble.impl;
 import cn.nj.storm.redis.repository.assemble.RedisComboService;
 import cn.nj.storm.redis.repository.dto.response.RedisResp;
 import cn.nj.storm.redis.repository.helpers.bean.ZSetItemS;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.StringRedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.data.redis.core.SessionCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -158,18 +171,140 @@ public class RedisComboServiceImpl implements RedisComboService
     @Override
     public RedisResp inventory(String userKey, String storeKey, Date expireDate)
     {
-        return null;
+        final List<String> list = new ArrayList<>();
+        list.add(userKey);
+        list.add(storeKey);
+        final RedisResp resp = new RedisResp();
+        try
+        {
+            List<Object> obj = redisTemplate.executePipelined(new SessionCallback<List<Object>>()
+            {
+                @Override
+                public List<Object> execute(RedisOperations operations)
+                        throws DataAccessException
+                {
+                    System.out.println(operations.opsForValue().get(storeKey));
+                    operations.watch(list);
+                    operations.multi();
+                    Long curStore = operations.opsForValue().increment(storeKey, -1);
+                    Long curUser = operations.opsForValue().increment(userKey, 1);
+                    List<Object> rs = operations.exec();
+                    System.out.println("执行结果：" + rs);
+                    System.out.println(storeKey + "执行结果：" + curStore);
+                    System.out.println(userKey + "执行结果：" + curUser);
+                    String result =
+                            "执行结果：" + rs + "|" + storeKey + "执行结果：" + curStore + "|" + userKey + "执行结果：" + curUser;
+                    resp.setNumObj(curStore);
+                    resp.setResultDesc(result);
+                    return rs;
+                }
+            });
+            System.out.println(obj);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return resp;
     }
     
     @Override
     public RedisResp pipeLineInventory(String userKey, String storeKey, Date expireDate)
     {
-        return null;
+        List<Object> results = null;
+        //        results = redisTemplate.executePipelined(new SessionCallback<List<Object>>()
+        //        {
+        //            @Override
+        //            public List<Object> execute(RedisOperations operations)
+        //                throws DataAccessException
+        //            {
+        //                operations.
+        //                return operations.;
+        //            }
+        //        });
+        //pipeline
+        RedisCallback<List<Object>> pipelineCallback = new RedisCallback<List<Object>>()
+        {
+            @Override
+            public List<Object> doInRedis(RedisConnection connection)
+                    throws DataAccessException
+            {
+                StringRedisConnection stringRedisConn = (StringRedisConnection)connection;
+                stringRedisConn.openPipeline();
+                stringRedisConn.get(userKey.getBytes());
+                stringRedisConn.incrBy(userKey.getBytes(), 100);
+                List<Object> list = stringRedisConn.closePipeline();
+                for (Object item : list)
+                {
+                    if (item instanceof byte[])
+                    {
+                        item = new String((byte[])item);
+                    }
+                    System.out.println(item);
+                }
+                return list;
+            }
+        };
+        results = (List<Object>)redisTemplate.execute(pipelineCallback);
+        for (Object item : results)
+        {
+            System.out.println(item);
+        }
+        RedisResp resp = null;
+        if (CollectionUtils.isNotEmpty(results))
+        {
+            resp = new RedisResp();
+            resp.setData((String)results.get(0));
+            resp.setNumObj((Long)results.get(1));
+        }
+        return resp;
     }
-    
+
     @Override
     public RedisResp scriptInventory(String... scripts)
     {
+        List<String> keys = new ArrayList<>();
+        //建议在你的应用上下文中配置一个DefaultRedisScript 的单例，避免在每个脚本执行的时候重复创建脚本的SHA1.
+        RedisScript<Long> script = new DefaultRedisScript<Long>(scripts[0], Long.class);
+        Long dbsize = redisTemplate.execute(script, keys, new Object[] {});
+        System.out.println("sha1:" + script.getSha1());
+        System.out.println("Lua:" + script.getScriptAsString());
+        System.out.println("dbsize:" + dbsize);
+        DefaultRedisScript<String> redisScript = new DefaultRedisScript<String>();
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("dubbo/scripts/HelloWorld.lua")));
+        redisScript.setResultType(String.class);
+        String result = redisTemplate.execute(redisScript, keys, new Object[] {});
+        System.out.println("sha1:" + redisScript.getSha1());
+        System.out.println("Lua:" + redisScript.getScriptAsString());
+        System.out.println("result:" + result);
         return null;
+    }
+
+    private List<Object> deserializeMixedResults(List<Object> rawValues, RedisSerializer valueSerializer,
+                                                 RedisSerializer hashKeySerializer, RedisSerializer hashValueSerializer)
+    {
+        if (rawValues == null)
+        {
+            return null;
+        }
+        List<Object> values = new ArrayList<Object>();
+        for (Object rawValue : rawValues)
+        {
+            if (rawValue instanceof byte[] && valueSerializer != null)
+            {
+                values.add(valueSerializer.deserialize((byte[])rawValue));
+            }
+            else if (rawValue instanceof List)
+            {
+                // Lists are the only potential Collections of mixed values....
+                values.add(
+                        deserializeMixedResults((List)rawValue, valueSerializer, hashKeySerializer, hashValueSerializer));
+            }
+            else
+            {
+                values.add(rawValue);
+            }
+        }
+        return values;
     }
 }

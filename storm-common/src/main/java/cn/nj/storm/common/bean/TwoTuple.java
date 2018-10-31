@@ -1,4 +1,4 @@
-package cn.nj.storm.common.pojo;
+package cn.nj.storm.common.bean;
 
 /**
  * <二元元组>

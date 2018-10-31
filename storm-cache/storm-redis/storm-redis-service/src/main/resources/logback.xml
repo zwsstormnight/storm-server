@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <contextName>storm-redis-service</contextName>
+    <property name="config.dir" value="." />
+    <property name="app" value="storm-redis" />
+    <property name="module" value="storm-redis-service" />
+    <conversionRule conversionWord="ip" converterClass="cn.nj.storm.common.conf.IpConvert" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned by default the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}|%level|${app}|%ip|%thread|%logger{36}|%msg%n
+            </pattern>、
+        </encoder>
+    </appender>
+
+    <appender name="operation" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${config.dir}/logs/${app}/operation/${module}_operation.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${config.dir}/logs/${app}/operation/${module}_operation_%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <!-- keep 30 days worth of history -->
+            <maxHistory>30</maxHistory>
+            <maxFileSize>20MB</maxFileSize>
+        </rollingPolicy>
+        <!--
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+          </filter>
+        -->
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
+        by default -->
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}|%level|${app}|%ip|%thread|%logger{36}|%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="run" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${config.dir}/logs/${app}/run/${module}_run.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${config.dir}/logs/${app}/operation/${module}_run_%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <!-- keep 30 days worth of history -->
+            <maxHistory>30</maxHistory>
+            <maxFileSize>20MB</maxFileSize>
+        </rollingPolicy>
+        <!--
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        -->
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
+        by default -->
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}|%level|${app}|%ip|%thread|%logger{36}|%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="interface" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${config.dir}/logs/${app}/interface/${module}_interface.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${config.dir}/logs/${app}/interface/${module}_interface_%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <!-- keep 30 days worth of history -->
+            <maxHistory>30</maxHistory>
+            <maxFileSize>20MB</maxFileSize>
+        </rollingPolicy>
+        <!--
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        -->
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
+        by default -->
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}|%level|${app}|%ip|%thread|%logger{36}|%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+    <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${config.dir}/logs/${app}/debug/${module}_debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${config.dir}/logs/${app}/debug/${module}_debug_%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <!-- keep 30 days worth of history -->
+            <maxHistory>30</maxHistory>
+            <maxFileSize>20MB</maxFileSize>
+        </rollingPolicy>
+        <!--
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        -->
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
+        by default -->
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS}|%level|${app}|%ip|%thread|%logger{36}|%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="run" additivity="false" >
+        <level value="info"/>
+        <appender-ref ref="run"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="operation" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="operation"/>
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="debug" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="debug"/>
+    </logger>
+    <logger name="interface" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="interface"/>
+    </logger>
+    <!-- 调试时打开
+     <logger name="org.mybatis" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="run"/>
+         <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.apache.ibatis">
+        <level value="info" />
+        <appender-ref ref="run"/>
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="java.sql" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="run"/>
+        <appender-ref ref="STDOUT" />
+    </logger>
+     -->
+    <!--
+    <logger name="org.springframework" level="ERROR" additivity="false">
+        <appender-ref ref="run"></appender-ref>
+        <appender-ref ref="STDOUT" />
+    </logger>
+    -->
+    <!--<logger name="cn.migu.shanpao.task.level.mapper" additivity="false">-->
+    <!--<level value="debug"/>-->
+    <!--<appender-ref ref="STDOUT" />-->
+    <!--</logger>-->
+    <!--<logger name="cn.migu.shanpao.task.mapper" additivity="false">-->
+    <!--<level value="debug"/>-->
+    <!--<appender-ref ref="STDOUT" />-->
+    <!--</logger>-->
+    <!--<logger name="com.alibaba.dubbo">-->
+    <!--<level value="error" />-->
+    <!--<appender-ref ref="STDOUT" />-->
+    <!--</logger>-->
+    <!--<logger name="org.apache.kafka.clients.producer">-->
+    <!--<level value="error" />-->
+    <!--<appender-ref ref="STDOUT" />-->
+    <!--</logger>-->
+    <!--<logger name="org.apache.kafka.clients.consumer">-->
+    <!--<level value="error" />-->
+    <!--<appender-ref ref="STDOUT" />-->
+    <!--</logger>-->
+
+
+
+    <!---->
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
