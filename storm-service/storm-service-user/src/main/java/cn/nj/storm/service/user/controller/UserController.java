@@ -47,6 +47,7 @@ public class UserController implements LoggerInitializer
         Map<String, Object> map = new HashMap<>(1);
         map.put("request Url", request.getRequestURL());
         request.getSession().setAttribute("map", map);
+        map.put("ttl",request.getSession().getMaxInactiveInterval());
         return map;
     }
 

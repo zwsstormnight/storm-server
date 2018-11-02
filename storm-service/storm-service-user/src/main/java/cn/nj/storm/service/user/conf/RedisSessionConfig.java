@@ -1,6 +1,8 @@
 package cn.nj.storm.service.user.conf;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.session.data.redis.config.ConfigureRedisAction;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
@@ -13,6 +15,12 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  * @since [产品/模块版本]
  */
 @Configuration
-@EnableRedisHttpSession
-public class RedisSessionConfig {
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 5400)
+public class RedisSessionConfig
+{
+//    @Bean
+//    public static ConfigureRedisAction configureRedisAction()
+//    {
+//        return ConfigureRedisAction.NO_OP;
+//    }
 }
