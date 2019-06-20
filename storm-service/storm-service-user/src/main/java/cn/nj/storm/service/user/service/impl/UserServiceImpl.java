@@ -2,7 +2,9 @@ package cn.nj.storm.service.user.service.impl;
 
 import cn.nj.storm.common.utils.LoggerInitializer;
 import cn.nj.storm.service.user.bean.DemoBean;
+import cn.nj.storm.service.user.bean.User;
 import cn.nj.storm.service.user.mapper.DemoMapper;
+import cn.nj.storm.service.user.mapper.UserMapper;
 import cn.nj.storm.service.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,11 +28,20 @@ public class UserServiceImpl implements UserService, LoggerInitializer
     
     @Autowired
     private DemoMapper demoMapper;
+
+    @Autowired
+    private UserMapper userMapper;
     
     @Override
     @Transactional(propagation=Propagation.NESTED)
     public List<DemoBean> list()
     {
         return demoMapper.selectDemoAll();
+    }
+
+    @Override
+    public User insert(User user){
+        int rst = userMapper.insert(user);
+        return user;
     }
 }

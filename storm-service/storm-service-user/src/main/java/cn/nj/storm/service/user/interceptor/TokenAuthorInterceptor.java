@@ -1,4 +1,4 @@
-package cn.nj.storm.service.user.filter;
+package cn.nj.storm.service.user.interceptor;
 
 import cn.nj.storm.common.utils.LoggerInitializer;
 import org.springframework.web.servlet.HandlerInterceptor;

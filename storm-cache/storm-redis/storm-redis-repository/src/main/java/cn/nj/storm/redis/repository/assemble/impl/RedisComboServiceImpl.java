@@ -19,10 +19,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -260,23 +257,30 @@ public class RedisComboServiceImpl implements RedisComboService
         return resp;
     }
 
+    @Autowired
+    private RedisScript<String> loginScript;
+
     @Override
     public RedisResp scriptInventory(String... scripts)
     {
         List<String> keys = new ArrayList<>();
+        keys.add("user:sessions:list:root");
+        List<Object> vals = new ArrayList<>();
+        vals.add(UUID.randomUUID().toString());
+        vals.add("3");
         //建议在你的应用上下文中配置一个DefaultRedisScript 的单例，避免在每个脚本执行的时候重复创建脚本的SHA1.
-        RedisScript<Long> script = new DefaultRedisScript<Long>(scripts[0], Long.class);
-        Long dbsize = redisTemplate.execute(script, keys, new Object[] {});
-        System.out.println("sha1:" + script.getSha1());
-        System.out.println("Lua:" + script.getScriptAsString());
-        System.out.println("dbsize:" + dbsize);
-        DefaultRedisScript<String> redisScript = new DefaultRedisScript<String>();
-        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("dubbo/scripts/HelloWorld.lua")));
-        redisScript.setResultType(String.class);
-        String result = redisTemplate.execute(redisScript, keys, new Object[] {});
-        System.out.println("sha1:" + redisScript.getSha1());
-        System.out.println("Lua:" + redisScript.getScriptAsString());
-        System.out.println("result:" + result);
+//        RedisScript<String> script = new DefaultRedisScript<>(scripts[0], String.class);
+        String rest = redisTemplate.execute(loginScript, keys, vals.toArray());
+        System.out.println("sha1:" + loginScript.getSha1());
+        System.out.println("Lua:" + loginScript.getScriptAsString());
+        System.out.println(rest);
+//        DefaultRedisScript<String> redisScript = new DefaultRedisScript<String>();
+//        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("dubbo/scripts/HelloWorld.lua")));
+//        redisScript.setResultType(String.class);
+//        String result = redisTemplate.execute(redisScript, keys, new Object[] {});
+//        System.out.println("sha1:" + redisScript.getSha1());
+//        System.out.println("Lua:" + redisScript.getScriptAsString());
+//        System.out.println("result:" + result);
         return null;
     }
 

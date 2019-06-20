@@ -5,18 +5,23 @@
     <parent>
         <artifactId>storm-persistence</artifactId>
         <groupId>cn.nj.storm</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>storm-sharding-mybatis</artifactId>
     <name>storm-sharding-mybatis</name>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>io.shardingjdbc</groupId>
             <artifactId>sharding-jdbc-core-spring-boot-starter</artifactId>
             <version>2.0.3</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

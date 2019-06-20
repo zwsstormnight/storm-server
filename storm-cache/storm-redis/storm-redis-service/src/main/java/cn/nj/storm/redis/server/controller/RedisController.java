@@ -1,11 +1,15 @@
 package cn.nj.storm.redis.server.controller;
 
-import cn.nj.storm.common.utils.LoggerInitializer;
 import cn.nj.storm.redis.repository.assemble.RedisBasicService;
+import cn.nj.storm.redis.repository.assemble.RedisComboService;
 import cn.nj.storm.redis.repository.dto.request.RedisReq;
 import cn.nj.storm.redis.repository.dto.response.RedisResp;
 import cn.nj.storm.redis.repository.helpers.annotations.EnableRedisPipelined;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +17,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -30,11 +32,14 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/redis")
-public class RedisController implements LoggerInitializer
+public class RedisController
 {
     
     @Autowired
     private RedisBasicService redisBasicService;
+    
+    @Autowired
+    private RedisComboService redisComboService;
     
     @RequestMapping("/get")
     @ResponseBody
@@ -105,6 +110,31 @@ public class RedisController implements LoggerInitializer
             
         }
         return Flux.fromIterable(result);
+    }
+    
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    
+    public AtomicInteger count = new AtomicInteger(0);
+
+    @Autowired
+    @Qualifier(value = "loginScript")
+    private RedisScript<String> loginScript;
+
+    @GetMapping("/test/script")
+    public String script()
+    {
+        List<String> keys = new ArrayList<>();
+        keys.add("user:admin");
+        List<Object> vals = new ArrayList<>();
+        String id = UUID.randomUUID().toString();
+        vals.add(id);
+        vals.add("3");
+        String kick = stringRedisTemplate.execute(loginScript, keys, vals.toArray());
+        if(StringUtils.isNotBlank(kick)){
+            stringRedisTemplate.delete(kick);
+        }
+        return kick;
     }
     
 }

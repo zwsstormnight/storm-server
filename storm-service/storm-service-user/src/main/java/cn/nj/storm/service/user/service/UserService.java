@@ -1,6 +1,7 @@
 package cn.nj.storm.service.user.service;
 
 import cn.nj.storm.service.user.bean.DemoBean;
+import cn.nj.storm.service.user.bean.User;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ import java.util.List;
 public interface UserService
 {
     List<DemoBean> list();
+
+    User insert(User user);
 }

@@ -1,8 +1,8 @@
 package cn.nj.storm.token.interceptor;
 
-import cn.nj.storm.common.utils.LoggerInitializer;
 import cn.nj.storm.redis.repository.assemble.RedisBasicService;
 import cn.nj.storm.token.annotation.FormToken;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -21,7 +21,8 @@ import java.util.UUID;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public class SubmitTokenInterceptor extends HandlerInterceptorAdapter implements LoggerInitializer
+@Slf4j
+public class SubmitTokenInterceptor extends HandlerInterceptorAdapter
 {
     
     @Autowired
@@ -44,13 +45,13 @@ public class SubmitTokenInterceptor extends HandlerInterceptorAdapter implements
                     //插入到redis
                     redisBasicService.setNx("formToken_" + uuid, "1", 60 * 60);
                     request.getSession(true).setAttribute("formToken", uuid);
-                    RUN_LOGGER.warn(request.getServletPath() + "---->formToken:" + uuid);
+                    log.warn(request.getServletPath() + "---->formToken:" + uuid);
                 }
                 if (annotation.remove())
                 {
                     if (isRepeatSubmit(request))
                     {
-                        RUN_LOGGER.warn("please don't repeat submit,url:" + request.getServletPath());
+                        log.warn("please don't repeat submit,url:" + request.getServletPath());
                         boolean pass = annotation.pass();
                         request.setAttribute("formToken_pass_repeat", "true");
                         return pass;

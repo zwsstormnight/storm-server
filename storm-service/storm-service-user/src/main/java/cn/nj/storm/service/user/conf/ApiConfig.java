@@ -1,6 +1,6 @@
 package cn.nj.storm.service.user.conf;
 
-import cn.nj.storm.service.user.filter.TokenAuthorInterceptor;
+import cn.nj.storm.service.user.interceptor.TokenAuthorInterceptor;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;

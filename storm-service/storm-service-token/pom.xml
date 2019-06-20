@@ -5,7 +5,7 @@
     <parent>
         <artifactId>storm-service</artifactId>
         <groupId>cn.nj.storm</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>storm-service-token</artifactId>
@@ -33,19 +33,19 @@
         <dependency>
             <groupId>cn.nj.storm</groupId>
             <artifactId>storm-mybatis</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cn.nj.storm</groupId>
             <artifactId>storm-common</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cn.nj.storm</groupId>
             <artifactId>storm-token</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

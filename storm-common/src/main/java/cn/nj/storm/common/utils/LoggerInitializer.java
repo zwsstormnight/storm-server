@@ -20,5 +20,5 @@ public interface LoggerInitializer
 
     Logger DEBUG_LOGGER = LoggerFactory.getLogger("debug");
 
-
+//    <T> String log(T t);
 }

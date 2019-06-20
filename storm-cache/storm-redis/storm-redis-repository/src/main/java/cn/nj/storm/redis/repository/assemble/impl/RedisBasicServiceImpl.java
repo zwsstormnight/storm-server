@@ -50,7 +50,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
             new RedisResp(Constants.RESULT_CODE_SUCCESS, Constants.RESULT_DESC_SUCCESS, strValue, key);
         return resultBean;
     }
-
+    
     @Override
     @EnableRedisPipelined
     public RedisResp set(String key, String value)
@@ -61,7 +61,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
             new RedisResp(Constants.RESULT_CODE_SUCCESS, Constants.RESULT_DESC_SUCCESS, strValue, key);
         return resultBean;
     }
-
+    
     @Override
     public RedisResp set(String key, String value, Long timeout, TimeUnit unit)
     {
@@ -84,7 +84,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return new RedisResp(Constants.RESULT_CODE_SUCCESS, Constants.RESULT_DESC_SUCCESS);
     }
-
+    
     @Override
     public RedisResp keys(String pattern)
     {
@@ -107,7 +107,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return new RedisResp(Constants.RESULT_CODE_FAIL, Constants.RESULT_DESC_FAIL);
     }
-
+    
     @Override
     public RedisResp keysByJedis(String url, String pattern)
     {
@@ -219,7 +219,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
             new RedisResp(Constants.RESULT_CODE_SUCCESS, Constants.RESULT_DESC_SUCCESS, strValue, key);
         return resultBean;
     }
-
+    
     @Override
     public RedisResp rightPop(String key)
     {
@@ -298,7 +298,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
             new RedisResp(Constants.RESULT_CODE_SUCCESS, Constants.RESULT_DESC_SUCCESS, strValue, key);
         return resultBean;
     }
-
+    
     @Override
     public RedisResp sadd(String key, String... values)
     {
@@ -847,7 +847,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return resultBean;
     }
-
+    
     @Override
     public RedisResp setNx(String key, String value, long timeout)
     {
@@ -858,7 +858,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return new RedisResp(Constants.RESULT_CODE_SUCCESS, Constants.RESULT_DESC_SUCCESS, b);
     }
-
+    
     @Override
     public RedisResp delKeysInPattern(String pattern)
     {
@@ -884,7 +884,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return resultBean;
     }
-
+    
     @Override
     public RedisResp delKeysInPatternByJedis(String url, String pattern)
     {
@@ -920,7 +920,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return resultBean;
     }
-
+    
     @Override
     public RedisResp hGetAll(String key)
     {
@@ -983,7 +983,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
     //        jedis.close();
     //        return keySets;
     //    }
-
+    
     @Override
     public RedisResp increment(String key, long value)
     {
@@ -999,7 +999,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return new RedisResp(Constants.RESULT_CODE_FAIL, Constants.RESULT_DESC_FAIL);
     }
-
+    
     @Override
     public RedisResp expire(String key, long timeout, TimeUnit timeUnit)
     {
@@ -1020,7 +1020,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return new RedisResp(Constants.RESULT_CODE_FAIL, Constants.RESULT_DESC_FAIL);
     }
-
+    
     @Override
     public RedisResp smembers(String key)
     {
@@ -1029,7 +1029,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
             new RedisResp(Constants.RESULT_CODE_SUCCESS, Constants.RESULT_DESC_SUCCESS, stringSet, key);
         return resultBean;
     }
-
+    
     @Override
     public RedisResp zadd(String key, Set<? extends ZSetOperations.TypedTuple> typedTuples)
     {
@@ -1060,7 +1060,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return resultBean;
     }
-
+    
     @Override
     public RedisResp zRemRangeByScore(String key, double min, double max)
     {
@@ -1082,7 +1082,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return resultBean;
     }
-
+    
     @Override
     public RedisResp zRemRange(String key, Long start, Long end)
     {
@@ -1106,7 +1106,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return resultBean;
     }
-
+    
     @Override
     public RedisResp sort(String key, String by, Boolean isDesc, Boolean alpha, Integer off, Integer num,
         List<String> gets)
@@ -1131,7 +1131,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return resultBean;
     }
-
+    
     @Override
     public RedisResp sort(SortQuery<String> query)
     {
@@ -1140,7 +1140,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         resultBean.setList(list);
         return resultBean;
     }
-
+    
     @Override
     public RedisResp sortPageList(String key, String subKey, String by, boolean isDesc, boolean isAlpha, int off,
         int num)
@@ -1175,7 +1175,7 @@ public class RedisBasicServiceImpl implements RedisBasicService
         }
         return resultBean;
     }
-
+    
     @Override
     public RedisResp incrByValue(String key, Long value)
     {
@@ -1183,6 +1183,17 @@ public class RedisBasicServiceImpl implements RedisBasicService
         Long resultValue = stringRedisTemplate.opsForValue().increment(key, value);
         resultBean.setNumObj(resultValue);
         resultBean.setKey(key);
+        return resultBean;
+    }
+    
+    @Override
+    public RedisResp psubscribe(String message, String... channels)
+    {
+        RedisResp resultBean = new RedisResp(Constants.RESULT_CODE_SUCCESS, Constants.RESULT_DESC_SUCCESS);
+        for (String topic : channels)
+        {
+            stringRedisTemplate.convertAndSend(topic, message);
+        }
         return resultBean;
     }
 }

@@ -1,6 +1,5 @@
 package cn.nj.storm.token.interceptor;
 
-import cn.nj.storm.common.utils.LoggerInitializer;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
@@ -12,7 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public class LoginTokenInterceptor extends HandlerInterceptorAdapter implements LoggerInitializer
+public class LoginTokenInterceptor extends HandlerInterceptorAdapter
 {
 
 }

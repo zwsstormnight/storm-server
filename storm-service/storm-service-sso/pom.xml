@@ -3,7 +3,7 @@
     <parent>
         <artifactId>storm-service</artifactId>
         <groupId>cn.nj.storm</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -11,18 +11,8 @@
     <packaging>jar</packaging>
 
     <name>storm-service-sso</name>
-    <version>1.0.0-SNAPSHOT</version>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

@@ -5,6 +5,7 @@ import cn.nj.storm.service.user.bean.DemoBean;
 import cn.nj.storm.service.user.bean.User;
 import cn.nj.storm.service.user.service.UserService;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +49,7 @@ public class UserController implements LoggerInitializer
         map.put("request Url", request.getRequestURL());
         request.getSession().setAttribute("map", map);
         map.put("ttl",request.getSession().getMaxInactiveInterval());
+        map.put("sessionid",request.getSession().getId());
         return map;
     }
 
