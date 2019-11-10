@@ -1,7 +1,7 @@
 package cn.nj.storm.zuul.config;
 
 import cn.nj.storm.zuul.filter.ZuulErrorFilter;
-import cn.nj.storm.zuul.filter.ZuulTokenFilter;
+import cn.nj.storm.zuul.filter.ZuulAuthenticateFilter;
 import cn.nj.storm.zuul.filter.processor.ExtFilterProcessor;
 import com.netflix.zuul.FilterProcessor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,31 +20,31 @@ import javax.annotation.PostConstruct;
  * @since [产品/模块版本]
  */
 @Configuration
-public class ZuulConfig
-{
-    
+public class ZuulConfig {
+
     @Value("${zuul.prefix}")
     private String zuulPrefix;
 
-    //TODO 主动AES解密
-    
-    @Bean
-    public ZuulTokenFilter zuulTokenFilter()
-    {
-        return new ZuulTokenFilter(zuulPrefix);
-    }
-    
-    @Bean
-    public ZuulErrorFilter zuulErrorFilter()
-    {
-        return new ZuulErrorFilter();
+    /**
+     * 设置启用自定义的核心处理器以完成我们的优化目标。
+     */
+    @PostConstruct
+    public void init() {
+        FilterProcessor.setProcessor(new ExtFilterProcessor());
     }
 
     /**
-     * 最后，我们需要在应用主类中，通过设置启用自定义的核心处理器以完成我们的优化目标。
+     *
+     * @return
      */
-    @PostConstruct
-    public void init(){
-        FilterProcessor.setProcessor(new ExtFilterProcessor());
+    @Bean
+    public ZuulAuthenticateFilter zuulTokenFilter() {
+        return new ZuulAuthenticateFilter(zuulPrefix);
     }
+
+    @Bean
+    public ZuulErrorFilter zuulErrorFilter() {
+        return new ZuulErrorFilter();
+    }
+
 }

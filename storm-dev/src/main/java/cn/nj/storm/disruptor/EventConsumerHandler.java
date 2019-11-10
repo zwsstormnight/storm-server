@@ -1,0 +1,20 @@
+package cn.nj.storm.disruptor;
+
+import com.lmax.disruptor.EventHandler;
+
+/**
+ * <一句话功能简述>
+ * <功能详细描述>
+ *
+ * @author zwsst
+ * @version [版本号, 2019/8/30]
+ * @see [相关类/方法]
+ * @since [产品/模块版本]
+ */
+public class EventConsumerHandler implements EventHandler<ProWorkEvent> {
+
+    @Override
+    public void onEvent(ProWorkEvent proWorkEvent, long sequence, boolean endOfBatch) throws Exception {
+        System.out.println("Event: " + proWorkEvent);
+    }
+}

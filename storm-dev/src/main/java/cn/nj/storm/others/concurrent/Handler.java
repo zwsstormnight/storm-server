@@ -38,15 +38,7 @@ public class Handler
                 //遍历每一个渠道
                 taskParam.setChannelId(id);
                 taskParam.setJobId(jobId);
-                tasks.add(new Callable()
-                {
-                    @Override
-                    public Object call()
-                        throws Exception
-                    {
-                        return handleData(TaskParam.setNewFields(taskParam));
-                    }
-                });
+                tasks.add((Callable) () -> handleData(TaskParam.setNewFields(taskParam)));
             }
             try
             {

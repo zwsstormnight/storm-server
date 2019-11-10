@@ -1,7 +1,11 @@
 package cn.nj.storm.service.token.controller;
 
+import cn.nj.storm.api.token.TokenApi;
+import org.apache.dubbo.config.annotation.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
 
 /**
  * <一句话功能简述>
@@ -13,17 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @since [产品/模块版本]
  */
 @RestController
-@RequestMapping("/token")
-public class TokenController
-{
-    
-    public String formToken()
-    {
-        return null;
-    }
-    
-    public String loginToken()
-    {
-        return null;
+@RequestMapping(value = "/token")
+@Service
+public class TokenController implements TokenApi {
+
+    @RequestMapping(value = "/create")
+    @Override
+    public String createRandom() {
+        return UUID.randomUUID().toString();
     }
 }

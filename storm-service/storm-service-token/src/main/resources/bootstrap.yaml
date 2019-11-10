@@ -1,0 +1,23 @@
+dubbo:
+  scan:
+    base-packages: cn.nj.storm
+  protocol:
+    name: dubbo
+    port: 30881
+  registry:
+    address: spring-cloud://localhost
+
+spring:
+  application:
+    name: storm-service-token
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+#  discovery:
+#    client:
+#      simple:
+#        local:
+#          service-id: storm-service-token

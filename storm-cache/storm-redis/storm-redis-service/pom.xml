@@ -18,7 +18,6 @@
         <dependency>
             <groupId>cn.nj.storm</groupId>
             <artifactId>storm-redis-repository</artifactId>
-            <version>1.1.0-SNAPSHOT</version>
         </dependency>
         <!-- eureka client -->
         <dependency>

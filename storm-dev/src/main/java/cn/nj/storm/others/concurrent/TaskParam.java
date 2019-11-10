@@ -193,7 +193,7 @@ public class TaskParam implements Cloneable
             {
                 fields[i].setAccessible(true);
                 newFields[i].setAccessible(true);
-                newFields[i].set(sd.getClass(), fields[i].get(taskParam.getClass()));
+                newFields[i].set(sd.getClass(), fields[i].get(taskParam));
             }
             catch (Exception e)
             {

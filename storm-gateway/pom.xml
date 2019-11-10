@@ -16,4 +16,12 @@
     <modules>
         <module>storm-zuul</module>
     </modules>
+
+    <dependencies>
+        <!-- storm -->
+        <dependency>
+            <groupId>cn.nj.storm</groupId>
+            <artifactId>storm-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>

@@ -3,7 +3,7 @@ package cn.nj.storm.service.sso.controller;
 import cn.nj.storm.service.sso.hystrics.HystrixClientRemoteInterface;
 import cn.nj.storm.service.sso.service.RemoteInterface;
 import cn.nj.storm.service.sso.service.SsoService;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+//import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +49,7 @@ public class SsoController
      * @param name
      * @return
      */
-    @HystrixCommand(fallbackMethod = "getNameFallback")
+//    @HystrixCommand(fallbackMethod = "getNameFallback")
     @RequestMapping(value = "/name")
     @ResponseBody
     public String getCompanyInfo(String name)
