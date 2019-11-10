@@ -56,3 +56,5 @@ spring.resources.static-locations=classpath:static/,file:static/
      3、创建SpringBoot项目时，一般的配置文件放置在“项目的resources目录下
 
 
+
+
